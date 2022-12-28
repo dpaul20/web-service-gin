@@ -17,7 +17,11 @@ func FindBooks(c *gin.Context) {
 	var books []models.Book
 	models.DB.Find(&books)
 
-	c.JSON(http.StatusOK, gin.H{"data": books})
+	c.JSON(http.StatusOK, gin.H{
+		"succes": true,
+		"msg":    `Books`,
+		"data":   books,
+	})
 }
 
 // POST /books
@@ -41,7 +45,11 @@ func CreateBook(c *gin.Context) {
 	book := models.Book{Title: body.Title, Author: body.Author}
 	models.DB.Create(&book)
 
-	c.JSON(http.StatusOK, gin.H{"data": book})
+	c.JSON(http.StatusOK, gin.H{
+		"succes": true,
+		"msg":    `Book Created`,
+		"data":   book,
+	})
 }
 
 // GET /books/:id
@@ -54,7 +62,11 @@ func FindBook(c *gin.Context) { // Get model if exist
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": book})
+	c.JSON(http.StatusOK, gin.H{
+		"succes": true,
+		"msg":    `Book Deleted`,
+		"data":   book,
+	})
 }
 
 // PATCH /books/:id
@@ -76,7 +88,11 @@ func UpdateBook(c *gin.Context) {
 
 	models.DB.Model(&book).Updates(models.Book{Title: input.Title, Author: input.Author})
 
-	c.JSON(http.StatusOK, gin.H{"data": book})
+	c.JSON(http.StatusOK, gin.H{
+		"succes": true,
+		"msg":    `Book found`,
+		"data":   book,
+	})
 }
 
 // DELETE /books/:id
@@ -91,5 +107,9 @@ func DeleteBook(c *gin.Context) {
 
 	models.DB.Delete(&book)
 
-	c.JSON(http.StatusOK, gin.H{"data": true})
+	c.JSON(http.StatusOK, gin.H{
+		"succes": true,
+		"msg":    `Book Deleted`,
+		"data":   "",
+	})
 }
